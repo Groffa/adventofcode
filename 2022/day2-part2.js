@@ -2506,6 +2506,22 @@ A Y`;
 
 const input = realInput;
 
+const route = (s) => {
+  return {
+    "A X": "A Z",
+    "A Y": "A X",
+    "A Z": "A Y",
+
+    "B X": "B X",
+    "B Y": "B Y",
+    "B Z": "B Z",
+
+    "C X": "C Y",
+    "C Y": "C Z",
+    "C Z": "C X",
+  }[s];
+};
+
 const outcomePoint = (s) => {
   return {
     "A X": 3,
@@ -2531,9 +2547,9 @@ const shapePoint = (x) => {
 console.log(
   input.split("\n").reduce((sum, guideRow) => {
     if (guideRow.length) {
-      const [opponent, shouldChoose] = guideRow.split(" ");
-      //console.log(guideRow, outcomePoint(guideRow), shapePoint(shouldChoose));
-      return sum + outcomePoint(guideRow) + shapePoint(shouldChoose);
+      const newGuideRow = route(guideRow);
+      const [opponent, shouldChoose] = newGuideRow.split(" ");
+      return sum + outcomePoint(newGuideRow) + shapePoint(shouldChoose);
     } else {
       return sum;
     }
